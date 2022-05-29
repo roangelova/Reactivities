@@ -7,3 +7,6 @@ Application/bin
 Application/obj
 API/bin
 API/obj
+API/Reactivities.db
+API/Reactivities.db-shm
+API/Reactivities.db-wal
