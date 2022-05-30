@@ -28,7 +28,7 @@ namespace Application.Activities
                 var activity = await _ctx.Activities.FindAsync(request.Id);
 
                 _ctx.Remove(activity);
-                _ctx.SaveChangesAsync();
+                await _ctx.SaveChangesAsync();
 
                 return Unit.Value;
             }
