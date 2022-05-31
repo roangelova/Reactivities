@@ -4,6 +4,7 @@ import { Container } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
+import { v4 as uuid } from 'uuid';
 
 function App() {
 
@@ -43,7 +44,7 @@ function App() {
       ? //updating
       setActivities([...activities.filter(x => x.id !== activity.id), activity])
       : //creating
-      setActivities([...activities, activity]);
+      setActivities([...activities, { ...activity, id: uuid() }]);
     setEditMode(false);
     setSelectedActivity(activity);
   }
