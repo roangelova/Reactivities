@@ -4,11 +4,13 @@ import { Container, Header, List } from 'semantic-ui-react';
 import { Activity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
+import { computeHeadingLevel } from '@testing-library/react';
 
 function App() {
 
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     axios.get<Activity[]>('http://localhost:5000/api/activities')
@@ -26,15 +28,29 @@ function App() {
     setSelectedActivity(undefined);
   }
 
+  function handleFormOpen(id?: string) {
+    id
+      ? handleSelectActivity(id)
+      : handleCancelSeletActivity();
+    setEditMode(true);
+  }
+
+  function handleFormClose() {
+    setEditMode(false);
+  }
+
   return (
     <Fragment>
-      <NavBar />
+      <NavBar openForm={handleFormOpen} />
       <Container style={{ marginTop: '7em' }}>
         <ActivityDashboard
           activities={activities}
           selectedActivity={selectedActivity}
-          selectActivityFunction={handleSelectActivity}
+          selectActivity={handleSelectActivity}
           cancelSelectActivity={handleCancelSeletActivity}
+          editMode={editMode}
+          openForm={handleFormOpen}
+          closeForm={handleFormClose}
         />
       </Container>
     </Fragment>
